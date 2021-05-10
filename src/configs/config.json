@@ -1,0 +1,22 @@
+{
+  "capsLockSafes": [],
+  "emojiSpamSafes": [],
+  "inviteSafes": [],
+  "partySafes": [],
+  "spamSafes": [],
+  "urlSafes": [],
+  "swearSafes": [],
+  "penals": {
+    "warnLimit": 5,
+    "mute": {
+      "roles": [],
+      "duration": 600000,
+      "limit": 8,
+      "log": ""
+    },
+    "jail": {
+      "roles": [],
+      "log": ""
+    }
+  }
+}

@@ -1,0 +1,17 @@
+{
+  "name": "chat-guard",
+  "version": "0.0.1",
+  "description": "Chat Guard",
+  "main": "theark.js",
+  "scripts": {
+    "start": "node theark.js"
+  },
+  "dependencies": {
+    "discord.js": "^12.5.3",
+    "moment": "^2.29.1",
+    "moment-duration-format": "^2.3.2",
+    "mongoose": "^5.12.7",
+    "ms": "^2.1.3"
+  },
+  "license": "MIT"
+}
