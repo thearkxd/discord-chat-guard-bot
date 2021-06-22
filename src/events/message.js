@@ -20,6 +20,7 @@ module.exports = async (message) => {
   const mentionRegex = /<@!?&?\d+>/g;
   const swearsRegex = new RegExp(`\\b(${swears.map(x => x.trim()).join("|")})$`, "giu");
   const urlRegex = /(https?:\/\/(?:www\.|(?!www))[a-zA-Z0-9][a-zA-Z0-9-]+[a-zA-Z0-9]\.[^\s]{2,}|www\.[a-zA-Z0-9][a-zA-Z0-9-]+[a-zA-Z0-9]\.[^\s]{2,}|https?:\/\/(?:www\.|(?!www))[a-zA-Z0-9]+\.[^\s]{2,}|www\.[a-zA-Z0-9]+\.[^\s]{2,})/gi;
+  const content = message.content.toLocaleLowerCase().trim();
 
   if (message.content.replace(capsLockRegex, "").length >= message.content.length / 2) {
     if (message.content.length <= 5 || client.safes(message, "capsLockSafes")) return;
@@ -41,7 +42,7 @@ module.exports = async (message) => {
         emojiSended = false;
       }, 10000);
     }
-  } else if (inviteRegex.test(message.content)) {
+  } else if (inviteRegex.test(content)) {
     const invites = await message.guild.fetchInvites();
     if ((message.guild.vanityURLCode && message.content.match(inviteRegex).some((i) => i === message.guild.vanityURLCode)) || invites.some((x) => message.content.match(inviteRegex).some((i) => i === x)) || client.safes(message, "inviteSafes")) return;
 
@@ -66,7 +67,7 @@ Jail Sebebi: \`Çok fazla davet linki atmak.\`
     }
     if (message.deletable) message.delete();
     message.reply(`bu sunucuda davet linki atamazsın!${data.count == 2 ? " (bir kere daha atarsan jailleneceksin!)" : ""} \`${data.count}/3\``).then((x) => x.delete({ timeout: 10000 }));
-  } else if (mentionRegex.test(message.content) && message.content.match(mentionRegex).length >= 5) {
+  } else if (mentionRegex.test(content) && message.content.match(mentionRegex).length >= 5) {
     message.member.roles.add(conf.penals.mute.roles);
     const penal = await client.penalize(message.guild.id, message.author.id, "CHAT-MUTE", true, client.user.id, "Çok fazla etiket atmak.", true, Date.now() + conf.penals.mute.duration);
     const log = new MessageEmbed()
@@ -94,7 +95,7 @@ Susturma Sebebi: \`Çok fazla etiket atmak.\`
         gameSended = false
       }, 10000);
     }
-  } else if (swearsRegex.test(message.content)) {
+  } else if (swearsRegex.test(content)) {
     if (client.safes(message, "swearSafes")) return;
     if (message.deletable) message.delete();
     if (!swearSended) {
@@ -104,7 +105,7 @@ Susturma Sebebi: \`Çok fazla etiket atmak.\`
         swearSended = false
       }, 10000);
     }
-  } else if (urlRegex.test(message.content)) {
+  } else if (urlRegex.test(content)) {
     if (client.safes(message, "urlSafes")) return;
     if (message.deletable) message.delete();
     if (!urlSended) {
